@@ -47,8 +47,18 @@ void Sudoku::PrintBoard(int (&board)[9][9] ) {
   cout << endl;
 }
 
+void* Sudoku::runner_rows(void* arg) {
+  cout << "in the thread " << endl;
+  pthread_exit(0);
+}
+
 void Sudoku::Solve() {
   // TODO : Write algorithm?
+  pthread_t tid_rows;
+  pthread_create(&tid_rows, NULL, &runner_rows, NULL);
+  pthread_join(tid_rows, NULL);
+  cout << "done" << endl;
+  pthread_exit(NULL);
 }
 
 bool Sudoku::IsRowValid() {
