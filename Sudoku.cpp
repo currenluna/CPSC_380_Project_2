@@ -15,20 +15,26 @@ Sudoku::Sudoku(string fname) {
   }
 
   // Read contents into m_board
-  int i, j = 0;
+  int i = 0;
   while (getline(fin, line)) {
-    if (j == 8)
-      i++;
-    j = (j+1) % 9;
+    string curr;
+    stringstream ss(line);
+    for (int j = 0; j < 9; j++) {
+      getline(ss, curr, ',');
+      m_boardInput[i][j] = stoi(curr);
+    }
+    i++;
   }
 
+  this->PrintBoard(this->m_boardInput);
 }
 
-void Sudoku::PrintBoard() {
+// Prints a Board
+void Sudoku::PrintBoard(int (&board)[9][9] ) {
   cout << endl;
   for (int i = 0; i < 9; i++) {
     for (int j = 0; j < 9; j++) {
-      cout << m_board[i][j] << " ";
+      cout << board[i][j] << " ";
       if (j == 2 || j == 5) {
         cout << "| ";
       }
@@ -42,7 +48,7 @@ void Sudoku::PrintBoard() {
 }
 
 void Sudoku::Solve() {
-
+  // TODO : Write algorithm?
 }
 
 bool Sudoku::IsRowValid() {
