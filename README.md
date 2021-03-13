@@ -14,3 +14,4 @@
 
 ## 3. RESOURCES
 - https://stackoverflow.com/questions/36849875/reading-comma-delimited-text-file-into-array
+- https://stackoverflow.com/questions/21725935/pass-the-class-method-as-pthread-start-function
