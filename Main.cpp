@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
   // Check for file input
   if (argc > 1) {
     Sudoku* s = new Sudoku(argv[1]);
-    s->Solve();
+    s->FindCoordinates();
   } else {
     cout << "No file provided." << endl;
   }
