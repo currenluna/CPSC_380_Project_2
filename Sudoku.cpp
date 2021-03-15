@@ -80,6 +80,8 @@ void Sudoku::FindCoordinates() {
   // Solve zeroed answer board
   this->Solve(m_boardSolution);
 
+  PrintBoard(m_boardSolution);
+
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
       // Problematic coordinate
