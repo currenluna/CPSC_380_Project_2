@@ -88,7 +88,7 @@ void Sudoku::FindCoordinates() {
       }
     }
   }
-  cout << "Done." << endl;
+  cout << endl << "Done!" << endl;
   pthread_exit(NULL);
 }
 
@@ -197,9 +197,10 @@ bool Sudoku::IsValid(int board[N][N], int row, int col, int num) {
 
 // Looks for next empty cell
 bool Sudoku::FoundEmpty(int board[N][N], int& row, int& col) {
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
+  for (row = 0; row < N; row++) {
+    for (col = 0; col < N; col++) {
       if (board[row][col] == 0) {
+        //cout << row << " " << col << endl;
         return true;
       }
     }
@@ -227,5 +228,7 @@ bool Sudoku::Solve(int board[N][N]) {
     }
     board[row][col] = 0; // Unassign for next attempt
   }
+
+
   return false;
 }
