@@ -15,6 +15,7 @@ using namespace std;
 #define N 9
 
 // Global Variables
+extern bool noErrors; // True if the file is error-free
 extern int m_boardInput[N][N]; // Board from Input
 extern int m_boardDuplicates[N][N]; // Board with Duplicate Count
 extern int m_boardSolution[N][N]; // Board with Solution

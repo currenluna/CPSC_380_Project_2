@@ -7,6 +7,7 @@
  */
 
 // Global Variables
+bool noErrors;
 int m_boardInput[N][N];
 int m_boardDuplicates[N][N];
 int m_boardSolution[N][N];
@@ -16,6 +17,8 @@ Sudoku::Sudoku(string fname) {
   ifstream fin;
   string line;
   fin.open(fname);
+
+  noErrors = true;
 
   // Error Opening File
   if (!fin.is_open()) {
@@ -84,17 +87,23 @@ void Sudoku::FindCoordinates() {
   }
 
   // Solve zeroed answer board
-  this->Solve(m_boardSolution);
+  if (!this->Solve(m_boardSolution)) {
+    cout << endl << "No solution to input" << endl;
+  }
 
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < N; j++) {
-      // Display Problematic coordinate(s)
-      if (m_boardDuplicates[i][j] > 1) {
-        cout << "Change ROW[" << i+1 << "] COL[" << j+1 << "] to " << m_boardSolution[i][j] << endl;
+  if (!noErrors) {
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        // Display Problematic coordinate(s)
+        if (m_boardDuplicates[i][j] > 1) {
+          cout << "Change ROW[" << i+1 << "] COL[" << j+1 << "] to " << m_boardSolution[i][j] << endl;
+        }
       }
     }
+  } else {
+    cout << "No errors found" << endl;
   }
-  //
+
   cout << endl << "Done!" << endl;
   pthread_exit(NULL);
 }
@@ -108,6 +117,7 @@ void* Sudoku::FindRowDuplicates(void* arg) {
       if (seen.find(m_boardInput[i][j]) == seen.end()) {
         seen.insert(m_boardInput[i][j]);
       } else {
+        noErrors = false;
         dups.insert(m_boardInput[i][j]);
       }
     }
@@ -129,6 +139,7 @@ void* Sudoku::FindColDuplicates(void* arg) {
       if (seen.find(m_boardInput[j][i]) == seen.end()) {
         seen.insert(m_boardInput[j][i]);
       } else {
+        noErrors = false;
         dups.insert(m_boardInput[j][i]);
       }
     }
@@ -154,6 +165,7 @@ void* Sudoku::FindBoxDuplicates(void* arg) {
           if (seen.find(m_boardInput[i+x][j+y]) == seen.end()) {
             seen.insert(m_boardInput[i+x][j+y]);
           } else {
+            noErrors = false;
             dups.insert(m_boardInput[i+x][j+y]);
           }
         }
