@@ -1,5 +1,11 @@
 #include "Sudoku.h"
 
+/* Curren Taber
+ * Professor Hansen
+ * CPSC 380-01
+ * Project 2: Sudoku Validator
+ */
+
 // Main
 int main(int argc, char* argv[]) {
 

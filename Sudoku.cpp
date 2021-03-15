@@ -1,6 +1,12 @@
 #include "Sudoku.h"
 
+/* Curren Taber
+ * Professor Hansen
+ * CPSC 380-01
+ * Project 2: Sudoku Validator
+ */
 
+// Global Variables
 int m_boardInput[N][N];
 int m_boardDuplicates[N][N];
 int m_boardSolution[N][N];
@@ -11,7 +17,7 @@ Sudoku::Sudoku(string fname) {
   string line;
   fin.open(fname);
 
-  // Error
+  // Error Opening File
   if (!fin.is_open()) {
     perror("File error");
     exit(EXIT_FAILURE);
@@ -54,11 +60,11 @@ void Sudoku::PrintBoard(int (&board)[N][N] ) {
 
 // Finds problematic coordinates and zeros them
 void Sudoku::FindCoordinates() {
-  // TODO
+
+  // Finding Duplicates across rows, columns, and boxes
   pthread_t tid_row;
   pthread_t tid_col;
   pthread_t tid_box;
-
 
   pthread_create(&tid_row, NULL, &FindRowDuplicates, NULL);
   pthread_create(&tid_col, NULL, &FindColDuplicates, NULL);
@@ -80,16 +86,15 @@ void Sudoku::FindCoordinates() {
   // Solve zeroed answer board
   this->Solve(m_boardSolution);
 
-  PrintBoard(m_boardSolution);
-
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
-      // Problematic coordinate
+      // Display Problematic coordinate(s)
       if (m_boardDuplicates[i][j] > 1) {
         cout << "Change ROW[" << i+1 << "] COL[" << j+1 << "] to " << m_boardSolution[i][j] << endl;
       }
     }
   }
+  //
   cout << endl << "Done!" << endl;
   pthread_exit(NULL);
 }
@@ -202,7 +207,6 @@ bool Sudoku::FoundEmpty(int board[N][N], int& row, int& col) {
   for (row = 0; row < N; row++) {
     for (col = 0; col < N; col++) {
       if (board[row][col] == 0) {
-        //cout << row << " " << col << endl;
         return true;
       }
     }
@@ -210,7 +214,7 @@ bool Sudoku::FoundEmpty(int board[N][N], int& row, int& col) {
   return false;
 }
 
-// Creates solution for unassigned spaces
+// Creates solution for unassigned cells
 bool Sudoku::Solve(int board[N][N]) {
 
   int row = 0;
@@ -230,7 +234,5 @@ bool Sudoku::Solve(int board[N][N]) {
     }
     board[row][col] = 0; // Unassign for next attempt
   }
-
-
   return false;
 }
